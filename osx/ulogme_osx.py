@@ -1,5 +1,4 @@
-import sys, os, time, signal
-from threading import Timer, Thread
+import os, time
 from optparse import OptionParser, make_option
 
 from Foundation import NSObject, NSAppleScript, NSTimer
@@ -26,6 +25,7 @@ def remove_non_ascii(s):
   """
   if s is None:
     return None
+
   return ''.join(c if ord(c) < 128 else ' ' for c in s)
 
 
@@ -37,7 +37,7 @@ class AppDelegate(NSObject):
     NSEvent.addLocalMonitorForEventsMatchingMask_handler_(mask, self.event_sniffer.event_handler)
 
   def applicationActivated_(self, note):
-    app =  note.userInfo().objectForKey_('NSWorkspaceApplicationKey')
+    app = note.userInfo().objectForKey_('NSWorkspaceApplicationKey')
     self.event_sniffer.set_active_app(app.localizedName())
 
   def screenSleep_(self, note):
@@ -46,6 +46,7 @@ class AppDelegate(NSObject):
   def writeActiveApp_(self, timer):
     if DEBUG_APP:
       print 'Got active app callback at %d' % current_time()
+
     self.event_sniffer.write_active_app()
 
 
@@ -56,12 +57,21 @@ class EventSniffer:
     self.current_app = None
     self.last_app_logged = None
     self.init_chrome_tab_script()
+    self.init_safari_tab_script()
     
   def init_chrome_tab_script(self):
     self.chrome_tab_script = NSAppleScript.alloc().initWithSource_(
       """
       tell application "Google Chrome"
         get URL of active tab of first window
+      end tell
+      """)
+
+  def init_safari_tab_script(self):
+    self.safari_tab_script = NSAppleScript.alloc().initWithSource_(
+      """
+      tell application "Safari"
+        get URL of front document
       end tell
       """)
 
@@ -129,13 +139,24 @@ class EventSniffer:
     It's probably best to only call this if we know that Chrome is running.
     """
     res = self.chrome_tab_script.executeAndReturnError_(None)
+
     if res[0] is None:
       return None
+
+    return str(res[0].stringValue())
+
+  def get_current_safari_tab(self):
+    res = self.safari_tab_script.executeAndReturnError_(None)
+
+    if res[0] is None:
+      return None
+
     return str(res[0].stringValue())
   
   def get_current_window_name(self):
     options = kCGWindowListOptionOnScreenOnly
     window_list = CGWindowListCopyWindowInfo(options, kCGNullWindowID)
+
     for window in window_list:
       try:
         if window['kCGWindowOwnerName'] == self.current_app:
@@ -143,28 +164,39 @@ class EventSniffer:
           return window_name
       except KeyError:
         pass
+
     return None
 
   def write_active_app(self):
     if self.current_app is not None:
       window_name = self.get_current_window_name()
       window_name = remove_non_ascii(window_name)
+
       if self.current_app == 'Google Chrome':
         window_name = self.get_current_chrome_tab()
         window_name = remove_non_ascii(window_name)
+      elif self.current_app == 'Safari':
+        window_name = self.get_current_safari_tab()
+        window_name = remove_non_ascii(window_name)
+
       if window_name is None or len(window_name) == 0:
         name_to_log = self.current_app
       else:
         name_to_log = '%s :: %s' % (self.current_app, window_name)
+
       if name_to_log != self.last_app_logged:
         self.last_app_logged = name_to_log
         s = '%d %s' % (current_time(), name_to_log)
+
         if DEBUG_APP:
           print s
+
         # substitute the rewound time to the window file pattern and write
         fname = self.options.active_window_file % (rewindTime(current_time()), )
+
         with open(fname, 'a') as f:
           f.write('%s\n' % s)
+
 
 if __name__ == '__main__':
   option_list = [

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [ -d ".env" ]; then
   source .env/bin/activate
 else
