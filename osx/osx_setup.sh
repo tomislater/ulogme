@@ -8,4 +8,5 @@ else
   # must be installed in this order to avoid insane build times
   pip install -U pyobjc-core
   pip install -U pyobjc
+  pip install -U py2app
 fi
