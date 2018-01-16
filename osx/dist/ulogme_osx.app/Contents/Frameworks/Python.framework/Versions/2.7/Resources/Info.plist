@@ -17,12 +17,12 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.7.5</string>
+	<string>2.7.14, (c) 2001-2017 Python Software Foundation.</string>
 	<key>CFBundleLongVersionString</key>
-	<string>2.7.5, (c) 2004-2013 Python Software Foundation.</string>
+	<string>2.7.14, (c) 2001-2017 Python Software Foundation.</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2.7.5</string>
+	<string>2.7.14</string>
 </dict>
 </plist>

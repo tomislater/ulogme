@@ -7,7 +7,7 @@
 
 
 /* Define if building universal (internal helper macro) */
-#define AC_APPLE_UNIVERSAL_BUILD 1
+/* #undef AC_APPLE_UNIVERSAL_BUILD */
 
 /* Define for AIX if your compiler is a genuine IBM xlC/xlC_r and you want
    support for AIX C++ shared extension modules. */
@@ -55,6 +55,9 @@
 
 /* Define to 1 if you have the `alarm' function. */
 #define HAVE_ALARM 1
+
+/* Define to 1 if you have the <alloca.h> header file. */
+#define HAVE_ALLOCA_H 1
 
 /* Define this if your time.h defines altzone. */
 /* #undef HAVE_ALTZONE */
@@ -115,6 +118,9 @@
 
 /* Define to 1 if you have the `clock' function. */
 #define HAVE_CLOCK 1
+
+/* Define if the C compiler supports computed gotos. */
+#define HAVE_COMPUTED_GOTOS 1
 
 /* Define to 1 if you have the `confstr' function. */
 #define HAVE_CONFSTR 1
@@ -278,6 +284,9 @@
 /* Define this if you have flockfile(), getc_unlocked(), and funlockfile() */
 #define HAVE_GETC_UNLOCKED 1
 
+/* Define to 1 if you have the `getentropy' function. */
+#define HAVE_GETENTROPY 1
+
 /* Define to 1 if you have the `getgroups' function. */
 #define HAVE_GETGROUPS 1
 
@@ -399,11 +408,7 @@
    and long long is available and at least as big as an off_t. You may need to
    add some flags for configuration and compilation to enable this mode. (For
    Solaris and Linux, the necessary defines are already defined.) */
-#ifdef __LP64__
 /* #undef HAVE_LARGEFILE_SUPPORT */
-#else
-#define HAVE_LARGEFILE_SUPPORT 1
-#endif
 
 /* Define to 1 if you have the 'lchflags' function. */
 #define HAVE_LCHFLAGS 1
@@ -436,7 +441,7 @@
 /* #undef HAVE_LIBRESOLV */
 
 /* Define to 1 if you have the <libutil.h> header file. */
-#define HAVE_LIBUTIL_H 1
+/* #undef HAVE_LIBUTIL_H */
 
 /* Define if you have the 'link' function. */
 #define HAVE_LINK 1
@@ -477,6 +482,9 @@
 /* Define to 1 if you have the `mktime' function. */
 #define HAVE_MKTIME 1
 
+/* Define to 1 if you have the `mmap' function. */
+#define HAVE_MMAP 1
+
 /* Define to 1 if you have the `mremap' function. */
 /* #undef HAVE_MREMAP */
 
@@ -508,10 +516,10 @@
 /* #undef HAVE_PLOCK */
 
 /* Define to 1 if you have the `poll' function. */
-/* #undef HAVE_POLL */
+#undef HAVE_POLL
 
 /* Define to 1 if you have the <poll.h> header file. */
-/* #undef HAVE_POLL_H */
+#undef HAVE_POLL_H
 
 /* Define to 1 if you have the <process.h> header file. */
 /* #undef HAVE_PROCESS_H */
@@ -521,6 +529,9 @@
 
 /* Define if you have GNU PTH threads. */
 /* #undef HAVE_PTH */
+
+/* Define to 1 if you have the `pthread_atfork' function. */
+#define HAVE_PTHREAD_ATFORK 1
 
 /* Defined for Solaris 2.6 bug in pthread header. */
 /* #undef HAVE_PTHREAD_DESTRUCTOR */
@@ -550,22 +561,25 @@
 #define HAVE_RL_CALLBACK 1
 
 /* Define if you can turn off readline's signal handling. */
-/* #undef HAVE_RL_CATCH_SIGNAL */
+#define HAVE_RL_CATCH_SIGNAL 1
 
 /* Define if you have readline 2.2 */
 #define HAVE_RL_COMPLETION_APPEND_CHARACTER 1
 
 /* Define if you have readline 4.0 */
-/* #undef HAVE_RL_COMPLETION_DISPLAY_MATCHES_HOOK */
+#define HAVE_RL_COMPLETION_DISPLAY_MATCHES_HOOK 1
 
 /* Define if you have readline 4.2 */
 #define HAVE_RL_COMPLETION_MATCHES 1
 
 /* Define if you have rl_completion_suppress_append */
-/* #undef HAVE_RL_COMPLETION_SUPPRESS_APPEND */
+#define HAVE_RL_COMPLETION_SUPPRESS_APPEND 1
 
 /* Define if you have readline 4.0 */
 #define HAVE_RL_PRE_INPUT_HOOK 1
+
+/* Define if you have readline 4.0 */
+#define HAVE_RL_RESIZE_TERMINAL 1
 
 /* Define to 1 if you have the `round' function. */
 #define HAVE_ROUND 1
@@ -718,10 +732,6 @@
 /* Define to 1 if `tm_zone' is a member of `struct tm'. */
 #define HAVE_STRUCT_TM_TM_ZONE 1
 
-/* Define to 1 if your `struct stat' has `st_blocks'. Deprecated, use
-   `HAVE_STRUCT_STAT_ST_BLOCKS' instead. */
-#define HAVE_ST_BLOCKS 1
-
 /* Define if you have the 'symlink' function. */
 #define HAVE_SYMLINK 1
 
@@ -771,6 +781,9 @@
 
 /* Define to 1 if you have the <sys/poll.h> header file. */
 #define HAVE_SYS_POLL_H 1
+
+/* Define to 1 if you have the <sys/random.h> header file. */
+#define HAVE_SYS_RANDOM_H 1
 
 /* Define to 1 if you have the <sys/resource.h> header file. */
 #define HAVE_SYS_RESOURCE_H 1
@@ -1005,11 +1018,7 @@
 #define SIZEOF_INT 4
 
 /* The size of `long', as computed by sizeof. */
-#ifdef __LP64__
 #define SIZEOF_LONG 8
-#else
-#define SIZEOF_LONG 4
-#endif
 
 /* The size of `long double', as computed by sizeof. */
 #define SIZEOF_LONG_DOUBLE 16
@@ -1024,42 +1033,22 @@
 #define SIZEOF_PID_T 4
 
 /* The size of `pthread_t', as computed by sizeof. */
-#ifdef __LP64__
 #define SIZEOF_PTHREAD_T 8
-#else
-#define SIZEOF_PTHREAD_T 4
-#endif
 
 /* The size of `short', as computed by sizeof. */
 #define SIZEOF_SHORT 2
 
 /* The size of `size_t', as computed by sizeof. */
-#ifdef __LP64__
 #define SIZEOF_SIZE_T 8
-#else
-#define SIZEOF_SIZE_T 4
-#endif
 
 /* The size of `time_t', as computed by sizeof. */
-#ifdef __LP64__
 #define SIZEOF_TIME_T 8
-#else
-#define SIZEOF_TIME_T 4
-#endif
 
 /* The size of `uintptr_t', as computed by sizeof. */
-#ifdef __LP64__
 #define SIZEOF_UINTPTR_T 8
-#else
-#define SIZEOF_UINTPTR_T 4
-#endif
 
 /* The size of `void *', as computed by sizeof. */
-#ifdef __LP64__
 #define SIZEOF_VOID_P 8
-#else
-#define SIZEOF_VOID_P 4
-#endif
 
 /* The size of `wchar_t', as computed by sizeof. */
 #define SIZEOF_WCHAR_T 4
@@ -1082,6 +1071,9 @@
 
 /* Define to 1 if your <sys/time.h> declares `struct tm'. */
 /* #undef TM_IN_SYS_TIME */
+
+/* Define if you want to use computed gotos in ceval.c. */
+/* #undef USE_COMPUTED_GOTOS */
 
 /* Enable extensions on AIX 3, Interix.  */
 #ifndef _ALL_SOURCE
@@ -1109,7 +1101,7 @@
 #define USE_TOOLBOX_OBJECT_GLUE 1
 
 /* Define if a va_list is an array of some kind */
-/* #undef VA_LIST_IS_ARRAY */
+#define VA_LIST_IS_ARRAY 1
 
 /* Define if you want SIGFPE handled (see Include/pyfpe.h). */
 /* #undef WANT_SIGFPE_HANDLER */

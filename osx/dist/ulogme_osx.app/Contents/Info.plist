@@ -65,7 +65,11 @@
 		<false/>
 		<key>site_packages</key>
 		<false/>
+		<key>use_faulthandler</key>
+		<false/>
 		<key>use_pythonpath</key>
+		<false/>
+		<key>verbose</key>
 		<false/>
 	</dict>
 	<key>PyResourcePackages</key>
@@ -78,10 +82,10 @@
 	<key>PythonInfoDict</key>
 	<dict>
 		<key>PythonExecutable</key>
-		<string>/usr/bin/python</string>
+		<string>/Users/tomasz/github/tomislater/ulogme/osx/.env/bin/python</string>
 		<key>PythonLongVersion</key>
-		<string>2.7.5 (default, Mar  9 2014, 22:15:05) 
-[GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)]</string>
+		<string>2.7.14 (default, Sep 26 2017, 19:31:49) 
+[GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.37)]</string>
 		<key>PythonShortVersion</key>
 		<string>2.7</string>
 		<key>py2app</key>
@@ -91,7 +95,7 @@
 			<key>template</key>
 			<string>app</string>
 			<key>version</key>
-			<string>0.7.1</string>
+			<string>0.14</string>
 		</dict>
 	</dict>
 </dict>
